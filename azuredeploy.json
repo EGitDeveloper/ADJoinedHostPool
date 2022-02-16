@@ -7,7 +7,8 @@
       "defaultValue": "[resourceGroup().location]"
     },
     "hostpoolName": {
-      "type": "string"
+      "type": "string",
+      "defaultValue":"hostpool1"
     },
     "hostpoolType": {
       "allowedValues": ["Personal", "Pooled"],
@@ -15,7 +16,7 @@
       "defaultValue": "Pooled"
     },
     "loadBalancerType": {
-      "allowedValues": ["BreadthFirst", "DepthFirst", "Persistent"],
+      "allowedValues": ["BreadthFirst", "DepthFirst"],
       "type": "String",
       "metadata": {
         "description": "Type of load balancer algorithm."
@@ -24,11 +25,14 @@
     },
     "validationEnvironment": {
       "type": "bool",
+      "metadata": {
+        "description": "Validation host pool allows you to test service changes before they are deployed to production."
+      },
       "defaultValue": false
     },
     "applicationGroupName": {
       "type": "string",
-      "defaultValue": "[concat(parameters('hostpoolName'), '-defaultAppGroup')]"
+      "defaultValue": "defaultAppGroup"
     },
     "workspaceName": {
       "type": "string",
