@@ -4,14 +4,23 @@
   "parameters": {
     "location": {
       "type": "string",
+      "metadata": {
+        "description": "Location to use for the resources. Defaults to resource group location."
+      },
       "defaultValue": "[resourceGroup().location]"
     },
     "hostpoolName": {
       "type": "string",
+      "metadata": {
+        "description": "Name of the host pool."
+      },
       "defaultValue":"hostpool1"
     },
     "hostpoolType": {
       "allowedValues": ["Personal", "Pooled"],
+      "metadata": {
+        "description": "Hostpool type."
+      },
       "type": "String",
       "defaultValue": "Pooled"
     },
@@ -32,21 +41,36 @@
     },
     "applicationGroupName": {
       "type": "string",
+      "metadata": {
+        "description": "Name of the application group."
+      },
       "defaultValue": "defaultAppGroup"
     },
     "workspaceName": {
       "type": "string",
+      "metadata": {
+        "description": "Name of the workspace."
+      },
       "defaultValue": "defaultWorkspace"
     },
     "sessionHostPrefix": {
       "type": "string",
+      "metadata": {
+        "description": "Prefix to use for virtual machines in hostpool."
+      },
       "defaultValue": "sessionHost"
     },
     "VNetName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the virtual network for the session host vms in host pool."
+      }
     },
     "subnetName": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Name of the virtual network subnet for the session host vms in host pool."
+      }
     },
     "sessionHostCount": {
       "type": "int",
