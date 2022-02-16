@@ -87,7 +87,10 @@
       "type": "securestring"
     },
     "domain": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "Domain to join. Example: @test-domain.com."
+      }
     },
     "domainAdminAccountUsername": {
       "type": "string"
