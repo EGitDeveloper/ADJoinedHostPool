@@ -1,0 +1,30 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "hostpoolName": {
+      "value": ""
+    },
+    "VNetName": {
+      "value": ""
+    },
+    "subnetName": {
+      "value": ""
+    },
+    "sessionHostVMAdminUsername": {
+      "value": ""
+    },
+    "sessionHostVMAdminPassword": {
+      "value": ""
+    },
+    "domain": {
+      "value": ""
+    },
+    "domainAdminAccountUsername": {
+      "value": ""
+    },
+    "domainAdminAccountPassword": {
+      "value": ""
+    }
+  }
+}
