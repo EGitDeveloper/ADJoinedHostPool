@@ -77,12 +77,12 @@
       "defaultValue": 1
     },
     "imageReferenceOffer": {
-        "type": "string",
-        "defaultValue": "office-365"
+      "type": "string",
+      "defaultValue": "office-365"
     },
     "imageReferenceSku": {
-        "type": "string",
-        "defaultValue": "20h2-evd-o365pp"
+      "type": "string",
+      "defaultValue": "20h2-evd-o365pp"
     },
     "sessionHostSize": {
       "defaultValue": "standard_ds1_v2",
@@ -241,8 +241,9 @@
             "name": "[concat(parameters('sessionHostPrefix'), '-', copyIndex(), '-os-disk')]",
             "createOption": "FromImage",
             "managedDisk": {
-              "storageAccountType": "Standard_LRS"
-            }
+                "storageAccountType": "StandardSSD_LRS"
+            },
+            "diskSizeGB": 512
           }
         },
         "licenseType": "Windows_Client",
