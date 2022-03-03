@@ -14,7 +14,7 @@
       "metadata": {
         "description": "Name of the host pool."
       },
-      "defaultValue":"hostpool1"
+      "defaultValue": "hostpool1"
     },
     "hostpoolType": {
       "allowedValues": ["Personal", "Pooled"],
@@ -75,6 +75,14 @@
     "sessionHostCount": {
       "type": "int",
       "defaultValue": 1
+    },
+    "imageReferenceOffer": {
+        "type": "string",
+        "defaultValue": "office-365"
+    },
+    "imageReferenceSku": {
+        "type": "string",
+        "defaultValue": "20h2-evd-o365pp"
     },
     "sessionHostSize": {
       "defaultValue": "standard_ds1_v2",
@@ -220,15 +228,13 @@
           "computerName": "[concat('sessionHost-', copyIndex())]",
           "adminUsername": "[parameters('sessionHostVMAdminUsername')]",
           "adminPassword": "[parameters('sessionHostVMAdminPassword')]",
-          "windowsConfiguration": {
-            
-          }
+          "windowsConfiguration": {}
         },
         "storageProfile": {
           "imageReference": {
             "publisher": "MicrosoftWindowsDesktop",
-            "offer": "office-365",
-            "sku": "20h2-evd-o365pp",
+            "offer": "[parameters('imageReferenceOffer')]",
+            "sku": "[parameters('imageReferenceSku')]",
             "version": "latest"
           },
           "osDisk": {
