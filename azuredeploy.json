@@ -9,150 +9,456 @@
       },
       "defaultValue": "[resourceGroup().location]"
     },
-    "hostpoolName": {
+    "virtualNetworkName": {
+      "type": "string",
+      "defaultValue": "vnet1",
+      "metadata": {
+        "description": "Virtual network name."
+      }
+    },
+    "virtualNetworkAddressRange": {
+      "type": "string",
+      "defaultValue": "10.0.0.0/16",
+      "metadata": {
+        "description": "Address range for virtual network."
+      }
+    },
+    "virtualNetworkDomainControllerSubnetName": {
+      "type": "string",
+      "defaultValue": "dc-subnet",
+      "metadata": {
+        "description": "Domain controller subnet name."
+      }
+    },
+    "virtualNetworkDomainControllerSubnetAddressRange": {
+      "type": "string",
+      "defaultValue": "10.0.1.0/24",
+      "metadata": {
+        "description": "Domain controller subnet address range."
+      }
+    },
+    "virtualNetworkHostPoolSubnetName": {
+      "type": "string",
+      "defaultValue": "hostpool-subnet",
+      "metadata": {
+        "description": "Host pool subnet name."
+      }
+    },
+    "virtualNetworkHostPoolSubnetAddressRange": {
+      "type": "string",
+      "defaultValue": "10.0.2.0/24",
+      "metadata": {
+        "description": "Host pool subnet address range."
+      }
+    },
+    "domainControllerVirtualMachineName": {
+      "type": "string",
+      "defaultValue": "dc-1",
+      "metadata": {
+        "description": "Name of the domain controller virtual machine."
+      },
+      "minLength": 3,
+      "maxLength": 15
+    },
+    "domainControllerVirtualMachineSize": {
+      "type": "string",
+      "defaultValue": "Standard_D2s_v3"
+    },
+    "domainControllerVirtualMachineOSDiskSizeGB": {
+      "type": "int",
+      "allowedValues": [
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192,
+        16384,
+        32767
+      ],
+      "defaultValue": 128
+    },
+    "domainControllerVirtualMachineOSDiskType": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_LRS",
+        "StandardSSD_LRS",
+        "StandardSSD_ZRS",
+        "Premium_LRS",
+        "Premium_ZRS",
+        "UltraSSD_LRS"
+      ],
+      "defaultValue": "Standard_LRS"
+    },
+    "domainControllerVirtualMachineOSSku": {
+      "type": "string",
+      "allowedValues": [
+        "2016-Datacenter",
+        "2019-Datacenter",
+        "2022-datacenter"
+      ],
+      "defaultValue": "2019-Datacenter"
+    },
+    "domainControllerVirtualMachineAdminUsername": {
+      "type": "string"
+    },
+    "domainControllerVirtualMachineAdminPassword": {
+      "type": "securestring"
+    },
+    "domainName": {
+      "type": "string",
+      "defaultValue": "some-domain.com",
+      "metadata": {
+        "description": "Domain name."
+      }
+    },
+    "hostPoolName": {
       "type": "string",
       "metadata": {
         "description": "Name of the host pool."
       },
       "defaultValue": "hostpool1"
     },
-    "hostpoolType": {
-      "allowedValues": ["Personal", "Pooled"],
+    "hostPoolType": {
+      "allowedValues": [ "Personal", "Pooled" ],
       "metadata": {
         "description": "Hostpool type."
       },
       "type": "String",
       "defaultValue": "Pooled"
     },
-    "loadBalancerType": {
-      "allowedValues": ["BreadthFirst", "DepthFirst"],
+    "hostPoolLoadBalancerType": {
+      "allowedValues": [ "BreadthFirst", "DepthFirst" ],
       "type": "String",
       "metadata": {
         "description": "Type of load balancer algorithm."
       },
       "defaultValue": "BreadthFirst"
     },
-    "validationEnvironment": {
-      "type": "bool",
-      "metadata": {
-        "description": "Validation host pool allows you to test service changes before they are deployed to production."
-      },
-      "defaultValue": false
+    "hostPoolMaxSessionLimit": {
+      "type": "int",
+      "defaultValue": 4
     },
-    "applicationGroupName": {
+    "hostPoolRegistrationTokenExpirationTIme": {
       "type": "string",
-      "metadata": {
-        "description": "Name of the application group."
-      },
-      "defaultValue": "defaultAppGroup"
+      "defaultValue": "[dateTimeAdd(utcNow('u'), 'PT12H')]"
     },
-    "workspaceName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the workspace."
-      },
-      "defaultValue": "defaultWorkspace"
-    },
-    "sessionHostPrefix": {
+    "hostPoolSessionHostPrefix": {
       "type": "string",
       "metadata": {
         "description": "Prefix to use for virtual machines in hostpool."
       },
-      "defaultValue": "sessionHost"
+      "defaultValue": "host"
     },
-    "VNetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the virtual network for the session host vms in host pool."
-      }
-    },
-    "subnetName": {
-      "type": "string",
-      "metadata": {
-        "description": "Name of the virtual network subnet for the session host vms in host pool."
-      }
-    },
-    "sessionHostCount": {
+    "hostPoolSessionHostCount": {
       "type": "int",
       "defaultValue": 1
     },
-    "imageReferenceOffer": {
-      "type": "string",
-      "defaultValue": "office-365"
-    },
-    "imageReferenceSku": {
-      "type": "string",
-      "defaultValue": "20h2-evd-o365pp"
-    },
-    "sessionHostSize": {
+    "hostPoolSessionHostSize": {
       "defaultValue": "standard_ds1_v2",
       "type": "String"
     },
-    "sessionHostVMAdminUsername": {
-      "type": "string"
-    },
-    "sessionHostVMAdminPassword": {
-      "type": "securestring"
-    },
-    "domain": {
+    "hostPoolSessionHostVirtualMachineOffer": {
       "type": "string",
       "metadata": {
-        "description": "Domain to join. Example: @test-domain.com."
-      }
+        "description": "description"
+      },
+      "defaultValue": "windows-11"
     },
-    "domainAdminAccountUsername": {
+    "hostPoolSessionHostVirtualMachineOSSku": {
+      "type": "string",
+      "metadata": {
+        "description": "description"
+      },
+      "allowedValues": [
+        "win11-21h2-avd",
+        "win11-22h2-avd"
+      ],
+      "defaultValue": "win11-22h2-avd"
+    },
+    "hostPoolSessionHostVirtualMachineOSDiskSizeGB": {
+      "type": "int",
+      "allowedValues": [
+        64,
+        128,
+        256,
+        512,
+        1024,
+        2048,
+        4096,
+        8192,
+        16384,
+        32767
+      ],
+      "defaultValue": 128
+    },
+    "hostPoolSessionHostVirtualMachineOSDiskType": {
+      "type": "string",
+      "allowedValues": [
+        "Standard_LRS",
+        "StandardSSD_LRS",
+        "StandardSSD_ZRS",
+        "Premium_LRS",
+        "Premium_ZRS",
+        "UltraSSD_LRS"
+      ],
+      "defaultValue": "Standard_LRS"
+    },
+    "hostPoolVirtualMachineAdminUsername": {
       "type": "string"
     },
-    "domainAdminAccountPassword": {
+    "hostPoolVirtualMachineAdminPassword": {
       "type": "securestring"
-    },
-    "hostPoolTokenExpirationTIme": {
-      "type": "string",
-      "defaultValue": "[dateTimeAdd(utcNow('u'), 'PT12H')]"
-    },
-    "availabilitySetFaultDomainCount": {
-      "type": "int",
-      "defaultValue": 2
-    },
-    "availabilitySetUpdateDomainCount": {
-      "type": "int",
-      "defaultValue": 5
-    },
-    "maxSessionLimit": {
-      "type": "int",
-      "defaultValue": 2
     }
   },
   "variables": {
+    "domainControllerVirtualMachinePrivateIP": "10.0.1.4",
+    "createADForestDSCLocation": "https://github.com/EGitDeveloper/DomainControllerVM/raw/main/DSC/CreateADPDC.zip",
     "deploymentIdentifier": "[uniqueString(resourceGroup().name)]"
   },
   "resources": [
     {
-      "type": "Microsoft.Compute/availabilitySets",
-      "apiVersion": "2021-07-01",
-      "name": "[concat(parameters('hostpoolName'),'-availabilitySet')]",
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-11-01",
+      "location": "[parameters('location')]",
+      "name": "[concat(parameters('virtualNetworkDomainControllerSubnetName'), '-nsg')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "RDP",
+            "properties": {
+              "description": "Allow RDP",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "3389",
+              "sourceAddressPrefix": "Internet",
+              "destinationAddressPrefix": "*",
+              "access": "Allow",
+              "priority": 100,
+              "direction": "Inbound"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-11-01",
+      "location": "[parameters('location')]",
+      "name": "[concat(parameters('virtualNetworkHostPoolSubnetName'), '-nsg')]",
+      "properties": {
+        "securityRules": []
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2020-11-01",
+      "location": "[parameters('location')]",
+      "name": "[parameters('virtualNetworkName')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkDomainControllerSubnetName'), '-nsg'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkHostPoolSubnetName'), '-nsg'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [ "[parameters('virtualNetworkAddressRange')]" ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('virtualNetworkDomainControllerSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('virtualNetworkDomainControllerSubnetAddressRange')]"
+            }
+          },
+          {
+            "name": "[parameters('virtualNetworkHostPoolSubnetName')]",
+            "properties": {
+              "addressPrefix": "[parameters('virtualNetworkHostPoolSubnetAddressRange')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2020-11-01",
+      "name": "[concat(parameters('domainControllerVirtualMachineName'), '-pip1')]",
       "location": "[parameters('location')]",
       "properties": {
-        "platformUpdateDomainCount": "[parameters('availabilitySetUpdateDomainCount')]",
-        "platformFaultDomainCount": "[parameters('availabilitySetFaultDomainCount')]"
-      },
-      "sku": {
-        "name": "Aligned"
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "apiVersion": "2020-11-01",
+      "name": "[concat(parameters('domainControllerVirtualMachineName'), '-nic1')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/publicIPAddresses', concat(parameters('domainControllerVirtualMachineName'), '-pip1'))]",
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',concat(parameters('domainControllerVirtualMachineName'), '-pip1'))]"
+              },
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress": "[variables('domainControllerVirtualMachinePrivateIP')]",
+              "subnet": {
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'),parameters('virtualNetworkDomainControllerSubnetName'))]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines",
+      "apiVersion": "2021-07-01",
+      "name": "[parameters('domainControllerVirtualMachineName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('domainControllerVirtualMachineName'), '-nic1'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('domainControllerVirtualMachineSize')]"
+        },
+        "osProfile": {
+          "computerName": "[parameters('domainControllerVirtualMachineName')]",
+          "adminUsername": "[parameters('domainControllerVirtualMachineAdminUsername')]",
+          "adminPassword": "[parameters('domainControllerVirtualMachineAdminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "MicrosoftWindowsServer",
+            "offer": "WindowsServer",
+            "sku": "[parameters('domainControllerVirtualMachineOSSku')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "name": "[concat(parameters('domainControllerVirtualMachineName'), '-os-disk')]",
+            "createOption": "FromImage",
+            "diskSizeGB": "[parameters('domainControllerVirtualMachineOSDiskSizeGB')]",
+            "managedDisk": {
+              "storageAccountType": "[parameters('domainControllerVirtualMachineOSDiskType')]"
+            }
+          }
+        },
+        "licenseType": "Windows_Server",
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('domainControllerVirtualMachineName'), '-nic1'))]"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "apiVersion": "2021-07-01",
+      "name": "[concat(parameters('domainControllerVirtualMachineName'), '/CreateADForest')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines', parameters('domainControllerVirtualMachineName'))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Powershell",
+        "type": "DSC",
+        "typeHandlerVersion": "2.19",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "ModulesUrl": "[variables('createADForestDSCLocation')]",
+          "ConfigurationFunction": "CreateADPDC.ps1\\CreateADPDC",
+          "Properties": {
+            "DomainName": "[parameters('domainName')]",
+            "AdminCreds": {
+              "UserName": "[concat(parameters('domainControllerVirtualMachineAdminUsername'), '@', parameters('domainName'))]",
+              "Password": "PrivateSettingsRef:AdminPassword"
+            }
+          }
+        },
+        "protectedSettings": {
+          "Items": {
+            "AdminPassword": "[parameters('domainControllerVirtualMachineAdminPassword')]"
+          }
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2021-04-01",
+      "name": "VNetDNSUpdate",
+      "dependsOn": [
+        "[resourceId('Microsoft.Compute/virtualMachines/extensions', parameters('domainControllerVirtualMachineName'), 'CreateADForest')]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkDomainControllerSubnetName'), '-nsg'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkHostPoolSubnetName'), '-nsg'))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.1",
+          "resources": [
+            {
+              "type": "Microsoft.Network/virtualNetworks",
+              "apiVersion": "2020-11-01",
+              "location": "[parameters('location')]",
+              "name": "[parameters('virtualNetworkName')]",
+              "properties": {
+                "addressSpace": {
+                  "addressPrefixes": [ "[parameters('virtualNetworkAddressRange')]" ]
+                },
+                "subnets": [
+                  {
+                    "name": "[parameters('virtualNetworkDomainControllerSubnetName')]",
+                    "properties": {
+                      "addressPrefix": "[parameters('virtualNetworkDomainControllerSubnetAddressRange')]",
+                      "networkSecurityGroup": {
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkDomainControllerSubnetName'), '-nsg'))]"
+                      }
+                    }
+                  },
+                  {
+                    "name": "[parameters('virtualNetworkHostPoolSubnetName')]",
+                    "properties": {
+                      "addressPrefix": "[parameters('virtualNetworkHostPoolSubnetAddressRange')]",
+                      "networkSecurityGroup": {
+                        "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(parameters('virtualNetworkHostPoolSubnetName'), '-nsg'))]"
+                      }
+                    }
+                  }
+                ],
+                "dhcpOptions": {
+                  "dnsServers": [ "[variables('domainControllerVirtualMachinePrivateIP')]" ]
+                }
+              }
+            }
+          ]
+        }
       }
     },
     {
       "type": "Microsoft.DesktopVirtualization/hostPools",
       "apiVersion": "2021-09-03-preview",
-      "name": "[parameters('hostpoolName')]",
+      "name": "[parameters('hostPoolName')]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'VNetDNSUpdate')]"
+      ],
       "properties": {
-        "hostPoolType": "[parameters('hostpoolType')]",
-        "maxSessionLimit": "[parameters('maxSessionLimit')]",
-        "loadBalancerType": "[parameters('loadBalancerType')]",
-        "validationEnvironment": "[parameters('validationEnvironment')]",
+        "hostPoolType": "[parameters('hostPoolType')]",
+        "maxSessionLimit": "[parameters('hostPoolMaxSessionLimit')]",
+        "loadBalancerType": "[parameters('hostPoolLoadBalancerType')]",
         "preferredAppGroupType": "Desktop",
         "registrationInfo": {
-          "expirationTime": "[parameters('hostpoolTokenExpirationTime')]",
+          "expirationTime": "[parameters('hostPoolRegistrationTokenExpirationTIme')]",
           "registrationTokenOperation": "Update"
         }
       }
@@ -160,13 +466,13 @@
     {
       "type": "Microsoft.DesktopVirtualization/applicationgroups",
       "apiVersion": "2021-09-03-preview",
-      "name": "[parameters('applicationGroupName')]",
+      "name": "default-app-group",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]"
+        "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostPoolName'))]"
       ],
       "properties": {
-        "hostpoolarmpath": "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostpoolName'))]",
+        "hostpoolarmpath": "[resourceId('Microsoft.DesktopVirtualization/hostpools/', parameters('hostPoolName'))]",
         "friendlyName": "Default Desktop",
         "applicationGroupType": "Desktop"
       }
@@ -174,22 +480,25 @@
     {
       "type": "Microsoft.DesktopVirtualization/workspaces",
       "apiVersion": "2021-07-12",
-      "name": "[parameters('workspaceName')]",
+      "name": "default-workspace",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.DesktopVirtualization/applicationGroups', parameters('applicationGroupName'))]"
+        "[resourceId('Microsoft.DesktopVirtualization/applicationgroups', 'default-app-group')]"
       ],
       "properties": {
         "applicationGroupReferences": [
-          "[resourceId('Microsoft.DesktopVirtualization/applicationgroups', parameters('applicationGroupName'))]"
+          "[resourceId('Microsoft.DesktopVirtualization/applicationgroups', 'default-app-group')]"
         ]
       }
     },
     {
       "type": "Microsoft.Network/networkInterfaces",
       "apiVersion": "2020-11-01",
-      "name": "[concat(parameters('sessionHostPrefix'), '-nic', copyIndex())]",
+      "name": "[concat(parameters('hostPoolSessionHostPrefix'), '-nic', copyIndex())]",
       "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]"
+      ],
       "properties": {
         "ipConfigurations": [
           {
@@ -197,7 +506,7 @@
             "properties": {
               "privateIPAllocationMethod": "Dynamic",
               "subnet": {
-                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
+                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'), parameters('virtualNetworkHostPoolSubnetName'))]"
               }
             }
           }
@@ -205,69 +514,93 @@
       },
       "copy": {
         "name": "[concat('nic-creation-loop', variables('deploymentIdentifier'))]",
-        "count": "[parameters('sessionHostCount')]"
+        "count": "[parameters('hostPoolSessionHostCount')]"
       }
     },
     {
       "type": "Microsoft.Compute/virtualMachines",
       "apiVersion": "2021-07-01",
-      "name": "[concat(parameters('sessionHostPrefix'), '-', copyIndex())]",
+      "name": "[concat(parameters('hostPoolSessionHostPrefix'), '-', copyIndex())]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Compute/availabilitySets', concat(parameters('hostpoolName'),'-availabilitySet'))]",
-        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('sessionHostPrefix'), '-nic', copyIndex()))]"
+        "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('hostPoolSessionHostPrefix'), '-nic', copyIndex()))]",
+        "[resourceId('Microsoft.DesktopVirtualization/hostPools', parameters('hostPoolName'))]"
       ],
       "properties": {
         "hardwareProfile": {
-          "vmSize": "[parameters('sessionHostSize')]"
-        },
-        "availabilitySet": {
-          "id": "[resourceId('Microsoft.Compute/availabilitySets',concat(parameters('hostpoolName'),'-availabilitySet'))]"
+          "vmSize": "[parameters('hostPoolSessionHostSize')]"
         },
         "osProfile": {
           "computerName": "[concat('sessionHost-', copyIndex())]",
-          "adminUsername": "[parameters('sessionHostVMAdminUsername')]",
-          "adminPassword": "[parameters('sessionHostVMAdminPassword')]",
+          "adminUsername": "[parameters('hostPoolVirtualMachineAdminUsername')]",
+          "adminPassword": "[parameters('hostPoolVirtualMachineAdminPassword')]",
           "windowsConfiguration": {}
         },
         "storageProfile": {
           "imageReference": {
             "publisher": "MicrosoftWindowsDesktop",
-            "offer": "[parameters('imageReferenceOffer')]",
-            "sku": "[parameters('imageReferenceSku')]",
+            "offer": "[parameters('hostPoolSessionHostVirtualMachineOffer')]",
+            "sku": "[parameters('hostPoolSessionHostVirtualMachineOSSku')]",
             "version": "latest"
           },
           "osDisk": {
-            "name": "[concat(parameters('sessionHostPrefix'), '-', copyIndex(), '-os-disk')]",
+            "name": "[concat(parameters('hostPoolSessionHostPrefix'), '-', copyIndex(), '-os-disk')]",
             "createOption": "FromImage",
+            "diskSizeGB": "[parameters('hostPoolSessionHostVirtualMachineOSDiskSizeGB')]",
             "managedDisk": {
-                "storageAccountType": "StandardSSD_LRS"
-            },
-            "diskSizeGB": 512
+              "storageAccountType": "[parameters('hostPoolSessionHostVirtualMachineOSDiskType')]"
+            }
           }
         },
         "licenseType": "Windows_Client",
         "networkProfile": {
           "networkInterfaces": [
             {
-              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('sessionHostPrefix'), '-nic', copyIndex()))]"
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(parameters('hostPoolSessionHostPrefix'), '-nic', copyIndex()))]"
             }
           ]
         }
       },
       "copy": {
         "name": "vm-creation-loop",
-        "count": "[parameters('sessionHostCount')]"
+        "count": "[parameters('hostPoolSessionHostCount')]"
       }
     },
     {
       "type": "Microsoft.Compute/virtualMachines/extensions",
       "apiVersion": "2021-07-01",
-      "name": "[concat(parameters('sessionHostPrefix'), '-', copyIndex(), '/Microsoft.PowerShell.DSC')]",
+      "name": "[concat(parameters('hostPoolSessionHostPrefix'), '-', copyIndex(), '/joindomain')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "vm-creation-loop",
-        "[resourceId('Microsoft.DesktopVirtualization/hostPools', parameters('hostpoolName'))]"
+        "[resourceId('Microsoft.Compute/virtualMachines', concat(parameters('hostPoolSessionHostPrefix'), '-', copyIndex()))]"
+      ],
+      "properties": {
+        "publisher": "Microsoft.Compute",
+        "type": "JsonADDomainExtension",
+        "typeHandlerVersion": "1.3",
+        "autoUpgradeMinorVersion": true,
+        "settings": {
+          "name": "[parameters('domainName')]",
+          "user": "[concat(parameters('domainControllerVirtualMachineAdminUsername'), '@', parameters('domainName'))]",
+          "restart": "true",
+          "options": "3"
+        },
+        "protectedSettings": {
+          "password": "[parameters('domainControllerVirtualMachineAdminPassword')]"
+        }
+      },
+      "copy": {
+        "name": "sessionHost-domain-join-loop",
+        "count": "[parameters('hostPoolSessionHostCount')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/virtualMachines/extensions",
+      "apiVersion": "2021-07-01",
+      "name": "[concat(parameters('hostPoolSessionHostPrefix'), '-', copyIndex(), '/Microsoft.PowerShell.DSC')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "sessionHost-domain-join-loop"
       ],
       "properties": {
         "publisher": "Microsoft.Powershell",
@@ -278,41 +611,15 @@
           "modulesUrl": "https://wvdportalstorageblob.blob.core.windows.net/galleryartifacts/Configuration_01-20-2022.zip",
           "configurationFunction": "Configuration.ps1\\AddSessionHost",
           "properties": {
-            "hostPoolName": "[parameters('hostpoolName')]",
-            "registrationInfoToken": "[reference(parameters('hostpoolName')).registrationInfo.token]",
+            "hostPoolName": "[parameters('hostPoolName')]",
+            "registrationInfoToken": "[reference(parameters('hostPoolName')).registrationInfo.token]",
             "aadJoin": false
           }
         }
       },
       "copy": {
         "name": "sessionHost-registration-loop",
-        "count": "[parameters('sessionHostCount')]"
-      }
-    },
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "apiVersion": "2021-07-01",
-      "name": "[concat(parameters('sessionHostPrefix'), '-', copyIndex(), '/joindomain')]",
-      "location": "[parameters('location')]",
-      "dependsOn": ["sessionHost-registration-loop"],
-      "properties": {
-        "publisher": "Microsoft.Compute",
-        "type": "JsonADDomainExtension",
-        "typeHandlerVersion": "1.3",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "name": "[parameters('domain')]",
-          "user": "[concat(parameters('domainAdminAccountUsername'), '@', parameters('domain'))]",
-          "restart": "true",
-          "options": "3"
-        },
-        "protectedSettings": {
-          "password": "[parameters('domainAdminAccountPassword')]"
-        }
-      },
-      "copy": {
-        "name": "sessionHost-domain-join-loop",
-        "count": "[parameters('sessionHostCount')]"
+        "count": "[parameters('hostPoolSessionHostCount')]"
       }
     }
   ],
